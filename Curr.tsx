@@ -1,7 +1,7 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
-import yup, { number } from 'yup'
+import * as yup from 'yup'
 
 const inputSchema = yup.object().shape({
     currency: yup.number().required("Please enter an amount to convert").min(0, "Should be a minimum of 0")
@@ -9,7 +9,7 @@ const inputSchema = yup.object().shape({
 
 export default function Curr() {
 
-    const [currency, setCurrency] = useState('')
+    const [isCurrency, setisCurrency] = useState<number>(0)
     const [converted, setconverted] = useState(false)
     const [USD, setUSD] = useState(false)
     const [EUR, setEUR] = useState(false)
@@ -18,7 +18,7 @@ export default function Curr() {
     const [AUS, setAUS] = useState(false)
     const [BTC, setBTC] = useState(false)
 
-    const convert = () => {
+    const convert = (currency: number) => {
         let rate = 0
 
         if (USD) {
@@ -39,18 +39,26 @@ export default function Curr() {
         if (BTC) {
             rate = 0.000000119
         }
-        // const finalConvert = doConversion(rate, currency)
+        const finalConvert = doConversion(rate, currency)
+        setisCurrency(finalConvert)
         setconverted(true)
     
     }
 
-    const doConversion = (rate: number) => {
-        // let result = currency * rate;
+    const doConversion = (rate: number, currency: number) => {
+        let result = currency * rate;
+        return result
+    }
+
+    const clear = () => {
+        setisCurrency(0)
+        setconverted(false)
     }
 
 
   return (
-    <View style={styles.container}>
+    <ScrollView keyboardShouldPersistTaps = "handled">
+    <SafeAreaView style={styles.container}>
         <Text style={styles.headertxt}>Currency Converter or smt</Text>
 
         <View style={styles.currencyContainer}>
@@ -60,7 +68,8 @@ export default function Curr() {
                 </Pressable>
             </View>
         </View>
-    </View>
+    </SafeAreaView>
+    </ScrollView>
   )
 }
 

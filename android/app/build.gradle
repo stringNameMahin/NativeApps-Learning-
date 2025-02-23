@@ -54,6 +54,12 @@ react {
     autolinkLibrariesWithApp()
 }
 
+// HERMES ENGINE
+def hermesEnabled = project.ext.react.get("enableHermes", true)
+
+// FLIPPER SERVER
+def FLIPPER_VERSION = "0.273.0" // or use the latest version you downloaded
+
 /**
  * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
  */
@@ -74,14 +80,14 @@ def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
 android {
     ndkVersion rootProject.ext.ndkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
-    compileSdk rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion ?: "34.0.0"
+    compileSdk rootProject.ext.compileSdkVersion ?: 34
 
     namespace "com.nativeapps"
     defaultConfig {
         applicationId "com.nativeapps"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdkVersion rootProject.ext.minSdkVersion ?: 21
+        targetSdkVersion rootProject.ext.targetSdkVersion ?: 34
         versionCode 1
         versionName "1.0"
     }
@@ -108,12 +114,19 @@ android {
 }
 
 dependencies {
-    // The version of react-native is set by the React Native Gradle Plugin
+    // React Native dependency
     implementation("com.facebook.react:react-android")
 
-    if (hermesEnabled.toBoolean()) {
+    // Hermes setup
+    if (hermesEnabled) {
         implementation("com.facebook.react:hermes-android")
     } else {
         implementation jscFlavor
     }
+
+    // Flipper setup
+    debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
+    debugImplementation("com.facebook.soloader:soloader:0.10.5")
+
+    releaseImplementation("com.facebook.flipper:flipper-noop:${FLIPPER_VERSION}")
 }

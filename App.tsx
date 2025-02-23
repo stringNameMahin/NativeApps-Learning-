@@ -1,3 +1,9 @@
+
+
+
+// THIS IS THE DICE APP
+
+
 import React from 'react';
 import { useState } from 'react';
 import type {JSX, PropsWithChildren} from 'react';
