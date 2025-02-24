@@ -12,6 +12,7 @@
   "dependencies": {
     "react": "19.0.0",
     "react-native": "0.78.0",
+    "react-native-snackbar": "^2.8.0",
     "yup": "^1.6.1"
   },
   "devDependencies": {
