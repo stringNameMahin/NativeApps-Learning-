@@ -4,13 +4,10 @@ import { useState, JSX } from "react";
 import {
     FlatList,
     Pressable,
-    SafeAreaView,
-    ScrollView,
     StatusBar,
     StyleSheet,
     Text,
     TextInput,
-    useColorScheme,
     View,
   } from 'react-native';
 
@@ -91,7 +88,6 @@ const App = (): JSX.Element => {
             />
           </View>
         </View>
-        
       </>
     );
   }
