@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, JSX } from 'react';
 
 import {
   FlatList,
@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 
 import Snackbar from 'react-native-snackbar';
-import Icons from './components/Icons';
+import Icons from './compo/Icons'
 
 function App(): JSX.Element {
   const [isCross, setIsCross] = useState<boolean>(false)
@@ -28,7 +28,6 @@ function App(): JSX.Element {
   }
 
   const checkIsWinner = () => {
-    //  checking  winner of the game
     if (
       gameState[0] === gameState[1] &&
       gameState[0] === gameState[2] &&
